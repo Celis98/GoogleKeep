@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Google Keep"
 include(":app")
+include(":data")
+include(":domain")

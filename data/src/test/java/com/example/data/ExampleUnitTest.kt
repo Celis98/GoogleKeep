@@ -1,4 +1,4 @@
-package com.example.googlekeep
+package com.example.data
 
 import org.junit.Test
 
