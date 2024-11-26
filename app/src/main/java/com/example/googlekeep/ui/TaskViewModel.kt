@@ -1,9 +1,10 @@
-package com.example.googlekeep
+package com.example.googlekeep.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.TaskUi
 import com.example.domain.usecase.AddTaskUseCase
+import com.example.domain.usecase.DeleteTaskUseCase
 import com.example.domain.usecase.GetAllTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskViewModel @Inject constructor(
     private val getAllTaskUseCase: GetAllTaskUseCase,
-    private val addTaskUseCase: AddTaskUseCase
+    private val addTaskUseCase: AddTaskUseCase,
+    private val deleteTaskUseCase: DeleteTaskUseCase
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(TaskUiState())
@@ -37,6 +39,18 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             addTaskUseCase.addTask(taskUi)
             loadAllTasks()
+        }
+    }
+
+    fun deleteTask(id: Int) {
+        viewModelScope.launch {
+            _uiState.value.taskList.find { it.id == id }?.let { taskToDelete ->
+                if (deleteTaskUseCase.deleteTaskById(taskToDelete)) {
+                    _uiState.value = _uiState.value.copy(
+                        taskList = _uiState.value.taskList.filter { it.id != id }
+                    )
+                }
+            }
         }
     }
 }

@@ -26,7 +26,8 @@ object TaskList
 fun TaskList(
     modifier: Modifier = Modifier,
     taskList: List<TaskUi>,
-    onAddTask: () -> Unit
+    onDeleteTask: (Int) -> Unit,
+    onAddTask: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -58,7 +59,12 @@ fun TaskList(
                     .testTag(TASK_LIST_TEST_TAG)
             ) {
                 items(taskList) { task ->
-                    Task(taskUi = task)
+                    Task(
+                        taskUi = task,
+                        onDeleteTask = { id ->
+                            onDeleteTask(id)
+                        }
+                    )
                 }
             }
         }

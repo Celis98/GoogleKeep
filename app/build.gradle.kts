@@ -60,6 +60,12 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Permisos
+    implementation(libs.accompanist.permissions)
+
+    // Alarmas
+    implementation(libs.accompanist.systemuicontroller)
+
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)

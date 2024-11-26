@@ -1,7 +1,9 @@
 package com.example.googlekeep
 
 import com.example.domain.usecase.AddTaskUseCase
+import com.example.domain.usecase.DeleteTaskUseCase
 import com.example.domain.usecase.GetAllTaskUseCase
+import com.example.googlekeep.ui.TaskViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -21,6 +23,7 @@ class TaskViewModelTest {
         coEvery { getAllTasks() } returns getMockTasks()
     }
     private val addTaskUseCase: AddTaskUseCase = mockk(relaxed = true)
+    private val deleteTaskUseCase: DeleteTaskUseCase = mockk(relaxed = true)
     private lateinit var viewModel: TaskViewModel
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -28,7 +31,7 @@ class TaskViewModelTest {
     fun setup() {
         val dispatcher = StandardTestDispatcher()
         Dispatchers.setMain(dispatcher)
-        viewModel = TaskViewModel(getAllTaskUseCase, addTaskUseCase)
+        viewModel = TaskViewModel(getAllTaskUseCase, addTaskUseCase, deleteTaskUseCase)
     }
 
     @Test
